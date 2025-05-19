@@ -1,0 +1,7 @@
+.idea/
+.next/
+build/
+target/
+dist/
+node_modules
+ignore/

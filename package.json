@@ -1,0 +1,23 @@
+{
+  "name": "nextjs-ssr-examples",
+  "version": "1.0.0",
+  "scripts": {
+    "reset": "rm -rf node_modules .next dist && npm install",
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "build-docker": "docker build -t nextjs-example-typestyle .",
+    "start-docker": "docker run -p 3000:3000 nextjs-example-typestyle"
+  },
+  "dependencies": {
+    "next": "15.2.4",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "typestyle": "^2.0.1"
+  },
+  "devDependencies": {
+    "typescript": "^5.2.0",
+    "@types/react": "^18.0.0",
+    "@types/node": "^18.0.0"
+  }
+}

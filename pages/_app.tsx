@@ -15,7 +15,7 @@ export default function MyApp({ Component, emotionCache = clientSideEmotionCache
   const theme = getThemeByName(pageProps.theme);
 
   return (
-    <CacheProvider value={emotionCache}>
+    <CacheProvider value={emotionCache!!}>
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <Component {...pageProps} />

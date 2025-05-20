@@ -1,7 +1,7 @@
 import {Button, Stack, Typography} from '@mui/material';
 import {GetServerSideProps} from 'next';
-import {parse} from 'cookie';
 import Link from 'next/link';
+import LazyLink from "../components/LazyLink";
 
 type Props = {
   theme: 'light' | 'dark';
@@ -15,19 +15,29 @@ export default function Home({ theme }: Props) {
           Welcome to the Home Page
         </Typography>
         <Typography variant="body1">
-          Current theme from cookie: <strong>{theme}</strong>
+          Current theme: <strong>{theme} . To change add to url: ?hi=1|3|... for light and ?hi=0,2,4|... for dark</strong>
         </Typography>
-        <Button component={Link} href="/posts/1" variant="contained">
+        <Button component={LazyLink} href="/posts/1" variant="contained">
           Go to Post 1
+        </Button>
+        <Button component={LazyLink} href="/posts/2" variant="contained">
+          Go to Post 2
         </Button>
       </Stack>
   );
 }
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  const id = Number(ctx.query?.hi || 0);
+  if (Number(id || 0) % 2 === 0) {
+    // cache control only is set in production builds as in dev mode its overwritten.
+    // This sets the cache header in the actual response
+    ctx.res.setHeader('Cache-Control', `public, max-age=600`);
+  }
+
   return {
     props: {
-      theme: Number(ctx.query?.hi || 0) % 2 === 0 ? 'light' : 'dark'
+      theme: id % 2 === 0 ? 'dark' : 'light'
     },
   };
 };

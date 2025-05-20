@@ -22,8 +22,8 @@ export const getThemeByName = (name: string) => {
         secondary: isDark ? '#b2dfdb' : '#00695c', // accent teal
       },
     },
-    // typography: {
-    //   fontFamily: `'Fira Code', 'Source Code Pro', 'Courier New', monospace`,
-    // },
+    typography: {
+      fontFamily: `'Fira Code', 'Source Code Pro', 'Courier New', monospace`,
+    },
   });
 };

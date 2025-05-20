@@ -6,18 +6,23 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "build-docker": "docker build -t nextjs-example-typestyle .",
-    "start-docker": "docker run -p 3000:3000 nextjs-example-typestyle"
+    "build-docker": "docker build -t nextjs-example-mui-emotion .",
+    "start-docker": "docker run -p 3000:3000 nextjs-example-mui-emotion"
   },
   "dependencies": {
-    "next": "15.2.4",
-    "react": "18.2.0",
-    "react-dom": "18.2.0",
-    "typestyle": "^2.0.1"
+    "@emotion/cache": "^11.11.0",
+    "@emotion/react": "^11.11.1",
+    "@emotion/server": "^11.11.0",
+    "@emotion/styled": "^11.11.0",
+    "@mui/material": "^5.15.0",
+    "cookie": "^0.6.0",
+    "next": "15.0.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   },
   "devDependencies": {
-    "typescript": "^5.2.0",
-    "@types/react": "^18.0.0",
-    "@types/node": "^18.0.0"
+    "@types/node": "^20.4.2",
+    "@types/react": "^18.2.14",
+    "typescript": "^5.1.6"
   }
 }

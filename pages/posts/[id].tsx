@@ -1,31 +1,18 @@
-import {postStyle} from '../../styles/posts/post.styles';
-import {GetServerSideProps} from "next";
+import { GetServerSideProps } from 'next';
+import { getThemeByName } from '../../lib/theme';
+import { Typography } from '@mui/material';
 
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  const id = ctx.params?.id;
 
-type Props = {
-    id: string;
+  return {
+    props: {
+      theme: id % 2 == 0 ? 'light' : 'dark',
+      id: ctx.params?.id || null,
+    },
+  };
 };
 
-export default function Post({ id }: Props) {
-    return (
-        <div className={postStyle}>
-            <h1>Post ID: {id}</h1>
-            <p>This is a dynamic post page.</p>
-        </div>
-    );
+export default function Post({ id }: { id: string }) {
+  return <Typography variant="h4">Post ID: {id}</Typography>;
 }
-
-export const getServerSideProps: GetServerSideProps = async (context) => {
-    const { res, params } = context;
-    const id = params?.id as string;
-
-    res.setHeader('Bob', `Marley`);
-
-    // cache control only is set in production builds as in dev mode its overwritten.
-    // This sets the cache header in the actual response
-    res.setHeader('Cache-Control', `public, max-age=10, stale-while-revalidate=${Number(id) % 5}`);
-
-    return {
-        props: { id }
-    };
-};

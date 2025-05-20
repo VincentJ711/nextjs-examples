@@ -1,18 +1,34 @@
 import Document, { Html, Head, Main, NextScript, DocumentContext } from 'next/document';
-import { getStyles } from 'typestyle';
+import createEmotionServer from '@emotion/server/create-instance';
+import createEmotionCache from '../lib/createEmotionCache';
 
 export default class MyDocument extends Document {
   static async getInitialProps(ctx: DocumentContext) {
+    const originalRenderPage = ctx.renderPage;
+    const cache = createEmotionCache();
+    const { extractCriticalToChunks } = createEmotionServer(cache);
+
+    ctx.renderPage = () =>
+      originalRenderPage({
+        enhanceApp: App => props => <App emotionCache={cache} {...props} />,
+      });
+
     const initialProps = await Document.getInitialProps(ctx);
+    const emotionStyles = extractCriticalToChunks(initialProps.html);
+    const emotionStyleTags = emotionStyles.styles.map(style => (
+      <style
+        key={style.key}
+        data-emotion={`${style.key} ${style.ids.join(' ')}`}
+        dangerouslySetInnerHTML={{ __html: style.css }}
+      />
+    ));
+
     return {
       ...initialProps,
       styles: (
         <>
           {initialProps.styles}
-          <style
-            id="typestyle"
-            dangerouslySetInnerHTML={{ __html: getStyles() }}
-          />
+          {emotionStyleTags}
         </>
       ),
     };
